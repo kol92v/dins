@@ -1,7 +1,5 @@
 package com.kol92v.dins.services;
 
-import com.kol92v.dins.converters.ConverterEntityDTO;
-import com.kol92v.dins.dto.DTObj;
 import com.kol92v.dins.entity.EntityDB;
 import com.kol92v.dins.exceptionhandling.exception.EmptyStringException;
 import com.kol92v.dins.exceptionhandling.exception.GetEntityException;

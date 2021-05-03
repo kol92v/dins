@@ -1,7 +1,7 @@
 package com.kol92v.dins.controllers;
 
 import com.kol92v.dins.converters.ConverterEntityDTO;
-import com.kol92v.dins.dto.DTObj;
+import com.kol92v.dins.dto.DTO;
 import com.kol92v.dins.entity.EntityDB;
 import com.kol92v.dins.services.CRUDService;
 import lombok.AllArgsConstructor;
@@ -11,23 +11,23 @@ import java.util.List;
 
 
 /**Это абстрактный обобщенный класс, от которого контроллеры могут унаследовать основную логику распределния запросов.
- * Данный класс работает с объектами типа {@link EntityDB}, {@link DTObj}
+ * Данный класс работает с объектами типа {@link EntityDB}, {@link DTO}
  * и {@link JpaRepository}.
  * Все запросы обрабатываются объектами типа {@link CRUDService}, который так же работает с переданными ему типами.
- * Для конвертации {@link Entity} в {@link DTO} и наоборот используется {@link ConverterEntityDTO}.
+ * Для конвертации {@link Entity} в {@link DTOImpl} и наоборот используется {@link ConverterEntityDTO}.
  * @param <Entity> Entity типа {@link EntityDB}
- * @param <DTO> DTO типа {@link DTObj}
+ * @param <DTOImpl> DTO типа {@link DTO}
  * @param <Repository> DAO реализующий интерфейс {@link JpaRepository} и работающий с сущностями {@link Entity}
  *                    и ID типа {@link Integer}
  * @see EntityDB
- * @see DTObj
+ * @see DTO
  * @see CRUDService
  * @see ConverterEntityDTO
  * @see JpaRepository
  * */
 
 @AllArgsConstructor
-public class MainRestController<Entity extends EntityDB, DTO extends DTObj, Repository extends JpaRepository<Entity, Integer>> {
+public class MainRestController<Entity extends EntityDB, DTOImpl extends DTO, Repository extends JpaRepository<Entity, Integer>> {
 
     /**
      * Сервис осуществляющий работу с сущностями в БД
@@ -35,18 +35,18 @@ public class MainRestController<Entity extends EntityDB, DTO extends DTObj, Repo
     protected final CRUDService<Entity, Repository> crudService;
 
     /**
-     * Объект осуществляющий конвертацию {@link Entity} в {@link DTO} и наоборот
+     * Объект осуществляющий конвертацию {@link Entity} в {@link DTOImpl} и наоборот
      * */
-    protected final ConverterEntityDTO<Entity, DTO> converterEntityDTO;
+    protected final ConverterEntityDTO<Entity, DTOImpl> converterEntityDTO;
 
     /**
      * Метод конвертирует и отдает сервису для сохранения переданный параметр
      * @param dto объект для конвертации в {@link Entity} и передачу {@link MainRestController#crudService}
      * для дальнейшего сохранения в БД
-     * @return {@link DTO} сконвертированный из сохраненного {@link Entity} в базе данных
+     * @return {@link DTOImpl} сконвертированный из сохраненного {@link Entity} в базе данных
      * */
     @PostMapping("/")
-    public DTO save(@RequestBody DTO dto) {
+    public DTOImpl save(@RequestBody DTOImpl dto) {
         Entity entity = converterEntityDTO.convert(dto);
         return converterEntityDTO.convert(crudService.save(entity));
     }
@@ -55,10 +55,10 @@ public class MainRestController<Entity extends EntityDB, DTO extends DTObj, Repo
      * Метод конвертирует и отдает сервису для обновления переданный параметр
      * @param dto объект для конвертации в {@link Entity} и передачу {@link MainRestController#crudService}
      * для дальнейшего обновления в БД
-     * @return {@link DTO} сконвертированный из измененного {@link Entity} в базе данных
+     * @return {@link DTOImpl} сконвертированный из измененного {@link Entity} в базе данных
      * */
     @PutMapping("/")
-    public DTO update(@RequestBody DTO dto) {
+    public DTOImpl update(@RequestBody DTOImpl dto) {
         Entity entity = converterEntityDTO.convert(dto);
         return converterEntityDTO.convert(crudService.update(entity));
     }
@@ -73,33 +73,33 @@ public class MainRestController<Entity extends EntityDB, DTO extends DTObj, Repo
     }
 
     /**
-     * Метод конвертирует полученный из {@link MainRestController#crudService} список {@link Entity} в {@link DTO}
+     * Метод конвертирует полученный из {@link MainRestController#crudService} список {@link Entity} в {@link DTOImpl}
      * и возвращет его клиенту
-     * @return список всех {@link DTO} из базы данных
+     * @return список всех {@link DTOImpl} из базы данных
      * */
     @GetMapping("/")
-    public List<DTO> getAllEntity() {
+    public List<DTOImpl> getAllEntity() {
         return converterEntityDTO.convertToDTO(crudService.getAllEntity());
     }
 
     /**
-     * Метод конвертирует {@link Entity} в {@link DTO}, полученный по переданному id, и возвращает {@link DTO}
+     * Метод конвертирует {@link Entity} в {@link DTOImpl}, полученный по переданному id, и возвращает {@link DTOImpl}
      * @param id id возвращаемой сущности из БД
-     * @return {@link DTO} найденной сущности в БД
+     * @return {@link DTOImpl} найденной сущности в БД
      * */
     @GetMapping("/{id}")
-    public DTO getEntity(@PathVariable int id) {
+    public DTOImpl getEntity(@PathVariable int id) {
         return converterEntityDTO.convert(crudService.getEntity(id));
     }
 
     /**
-     * Метод возвращает список {@link DTO} по переданной подстроке в параметрах из сконвертированного
+     * Метод возвращает список {@link DTOImpl} по переданной подстроке в параметрах из сконвертированного
      * списка {@link Entity}
      * @param substring подстрока по которой будет оуществляться поиск {@link Entity} в БД
-     * @return список {@link DTO} найденных сущности в БД по переданной подстроке
+     * @return список {@link DTOImpl} найденных сущности в БД по переданной подстроке
      * */
-    @GetMapping("/substring={substring}")
-    public List<DTO> getEntityBySubstring(@PathVariable String substring) {
+    @GetMapping("/search?substring=substring")
+    public List<DTOImpl> getEntityBySubstring(@RequestParam String substring) {
         return converterEntityDTO.convertToDTO(crudService.getEntityBySubstring(substring));
     }
 

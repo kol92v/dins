@@ -7,7 +7,7 @@ package com.kol92v.dins.entity;
 public interface EntityDB {
 
     /**
-     * Метод возвращает ID сущности из БД
+     * Предоставляет базовый функционал для получения объекта по ID представленном в БД
      * @return ID сущности из БД
      * */
     int getId();

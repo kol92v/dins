@@ -4,17 +4,17 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * DTO для класса {@link com.kol92v.dins.entity.Note} реализующий интерфейс {@link DTObj}
+ * DTO для класса {@link com.kol92v.dins.entity.Note} реализующий интерфейс {@link DTO}
  * */
 
 @Data
 @Builder
-public class NoteDTO implements DTObj {
+public class NoteDTO implements DTO {
 
-    int id;
+    private int id;
 
-    String phoneNumber;
+    private String phoneNumber;
 
-    int ownerId;
+    private int ownerId;
     
 }

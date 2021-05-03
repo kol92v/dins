@@ -1,17 +1,15 @@
 package com.kol92v.dins.converters;
 
-import com.kol92v.dins.dto.DTObj;
-import com.kol92v.dins.dto.NoteDTO;
+import com.kol92v.dins.dto.DTO;
 import com.kol92v.dins.dto.UserDTO;
 import com.kol92v.dins.entity.EntityDB;
-import com.kol92v.dins.entity.Note;
 import com.kol92v.dins.entity.User;
 import org.springframework.stereotype.Component;
 
 /**
  * Данный класс реализует интерфейс {@link ConverterEntityDTO} и передает ему в параметры
  * {@link User} и {@link UserDTO} и реализует методы конвертации данных типов объектов,
- * такие как {@link ConverterEntityDTO#convert(DTObj)} и {@link ConverterEntityDTO#convert(EntityDB)}
+ * такие как {@link ConverterEntityDTO#convert(DTO)} и {@link ConverterEntityDTO#convert(EntityDB)}
  * */
 
 @Component
