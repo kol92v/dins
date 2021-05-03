@@ -5,7 +5,6 @@ import com.kol92v.dins.entity.Note;
 import com.kol92v.dins.entity.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConverterNoteTest {

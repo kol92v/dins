@@ -1,7 +1,6 @@
 package com.kol92v.dins.services;
 
 import com.kol92v.dins.entity.EntityDB;
-
 import java.util.List;
 
 /**

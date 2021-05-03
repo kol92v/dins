@@ -7,10 +7,7 @@ import com.kol92v.dins.entity.Note;
 import com.kol92v.dins.services.CRUDService;
 import com.kol92v.dins.services.CRUDServiceNote;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
@@ -44,8 +41,8 @@ public class RESTControllerNote extends MainRestController<Note, NoteDTO, NoteJp
      * пользователя
      * @return список всех записей по переданному ID пользователя
      * */
-    @GetMapping("/owner_id={ownerId}")
-    public List<NoteDTO> getNotesByOwnerId(@PathVariable int ownerId) {
+    @GetMapping("/owner")
+    public List<NoteDTO> getNotesByOwnerId(@RequestParam int ownerId) {
         return converterEntityDTO.convertToDTO(crudServiceNote.getNotesByOwnerId(ownerId));
     }
 }

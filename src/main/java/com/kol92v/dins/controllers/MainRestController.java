@@ -98,7 +98,7 @@ public class MainRestController<Entity extends EntityDB, DTOImpl extends DTO, Re
      * @param substring подстрока по которой будет оуществляться поиск {@link Entity} в БД
      * @return список {@link DTOImpl} найденных сущности в БД по переданной подстроке
      * */
-    @GetMapping("/search?substring=substring")
+    @GetMapping("/search")
     public List<DTOImpl> getEntityBySubstring(@RequestParam String substring) {
         return converterEntityDTO.convertToDTO(crudService.getEntityBySubstring(substring));
     }
